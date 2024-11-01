@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Dialise GUI
+Comment=Interface gráfica para diálise peritoneal automatizada
+Exec=python3 C:\Users\lucas\OneDrive\Área de Trabalho\TCC\DPA\dialise_gui.py
+Icon=/caminho/para/o/icone/dialise_icon.png
+Terminal=false
+Type=Application
+Categories=Utility;
