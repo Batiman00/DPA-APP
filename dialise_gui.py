@@ -18,6 +18,9 @@ setting_light_icon = ctk.CTkImage(light_image=Image.open('images/settings_light.
 setting_icon = ctk.CTkImage(light_image=Image.open('images/settings.png'))
 info_light_icon = ctk.CTkImage(light_image=Image.open('images/info_light.png'))
 info_icon = ctk.CTkImage(light_image=Image.open('images/info.png'))
+monitoramento_light_icon = ctk.CTkImage(light_image=Image.open('images/monitoramento_light.png'))
+monitoramento_icon = ctk.CTkImage(light_image=Image.open('images/monitoramento.png'))
+power_icon = ctk.CTkImage(light_image=Image.open('images/power.png'), size=(50,50))
 
 def atualizar_hora():
     hora_atual = time.strftime('%H:%M')
@@ -28,22 +31,22 @@ def mostrar_frame(frame, aba):
     frame.tkraise()
     if aba == "parametros":
         parametros_button.configure(fg_color=["#152759","#064E3B"], image=(param_light_icon),text_color="white",background_corner_colors=[["#9EC9E0","#34D399"], '#152759','#152759', ["#9EC9E0","#34D399"]])  # Aba selecionada
-        monitoramento_button.configure(fg_color=["#9EC9E0","#34D399"],image=info_icon, text_color=["#282828","#000000"])  # Aba não selecionada
+        monitoramento_button.configure(fg_color=["#9EC9E0","#34D399"],image=monitoramento_icon, text_color=["#282828","#000000"])  # Aba não selecionada
         configuracoes_button.configure(fg_color=["#9EC9E0","#34D399"],image=setting_icon, text_color=["#282828","#000000"])  # Aba não selecionada
         sobre_button.configure(fg_color=["#9EC9E0","#34D399"],image=info_icon, text_color=["#282828","#000000"])  # Aba não selecionada
     elif aba == "monitoramento":
         parametros_button.configure(fg_color=["#9EC9E0","#34D399"], image=param_icon,text_color=["#282828","#000000"])
-        monitoramento_button.configure(fg_color=["#152759","#064E3B"],image=info_icon, text_color="white")  # Aba não selecionada
+        monitoramento_button.configure(fg_color=["#152759","#064E3B"],image=monitoramento_light_icon, text_color="white")  # Aba não selecionada
         configuracoes_button.configure(fg_color=["#9EC9E0","#34D399"],image=setting_light_icon, text_color=["#282828","#000000"])
         sobre_button.configure(fg_color=["#9EC9E0","#34D399"],image=info_icon, text_color=["#282828","#000000"])
     elif aba == "configuracoes":
         parametros_button.configure(fg_color=["#9EC9E0","#34D399"], image=param_icon,text_color=["#282828","#000000"])
-        monitoramento_button.configure(fg_color=["#9EC9E0","#34D399"],image=info_icon, text_color=["#282828","#000000"])  # Aba não selecionada
+        monitoramento_button.configure(fg_color=["#9EC9E0","#34D399"],image=monitoramento_icon, text_color=["#282828","#000000"])  # Aba não selecionada
         configuracoes_button.configure(fg_color=["#152759","#064E3B"],image=setting_light_icon, text_color="white")
         sobre_button.configure(fg_color=["#9EC9E0","#34D399"],image=info_icon, text_color=["#282828","#000000"])
     elif aba == "sobre":
         parametros_button.configure(fg_color=["#9EC9E0","#34D399"],image=param_icon, text_color=["#282828","#000000"])
-        monitoramento_button.configure(fg_color=["#9EC9E0","#34D399"],image=info_icon, text_color=["#282828","#000000"])  # Aba não selecionada
+        monitoramento_button.configure(fg_color=["#9EC9E0","#34D399"],image=monitoramento_icon, text_color=["#282828","#000000"])  # Aba não selecionada
         configuracoes_button.configure(fg_color=["#9EC9E0","#34D399"],image=setting_icon, text_color=["#282828","#000000"])
         sobre_button.configure(fg_color=["#152759","#064E3B"],image=info_light_icon, text_color="white")
 
@@ -106,8 +109,12 @@ sobre_button = ctk.CTkButton(tab_frame,anchor='w', text="Sobre", width=180, heig
                              fg_color=["#9EC9E0","#34D399"], text_color="white",background_corner_colors=[["#9EC9E0","#34D399"], ["#152759","#064E3B"],["#152759","#064E3B"], ["#9EC9E0","#34D399"]],border_width=2)  # Não selecionada
 sobre_button.grid(row=3, column=0, padx=(30, 0))
 
+power_button = ctk.CTkButton(tab_frame, text="", image=power_icon,  width=34, height=34,font=("Poppins", 30, "bold"), command=root.quit, corner_radius=16, fg_color="#9EC9E0", hover_color="#9EC9E0")
+power_button.grid(row=4, column=0, pady=(40,0))
+
+
 exit_button = ctk.CTkButton(tab_frame, text="SAIR", width=100, height=34,font=("Poppins", 16, "bold"), command=root.quit, corner_radius=16)
-exit_button.grid(row=4, column=0, pady=(110,0))
+exit_button.grid(row=5, column=0, pady=(10,0))
 
 mostrar_frame(param_frame, "parametros")
 

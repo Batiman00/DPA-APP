@@ -9,7 +9,10 @@ from datetime import datetime
 import screen_brightness_control as sbc
 import serial
 
-# Função para exibir a caixa de erro
+
+porta_serial = '/dev/serial0'
+baudrate = 9600  # Taxa de transmissão (ajuste conforme necessário)
+
 def show_error(message):
     tk.messagebox.showerror("Erro", message)
 
@@ -22,9 +25,6 @@ def enviar_dados_serial(volume, tempo, residual):
         tempo (float): Valor do tempo.
         residual (float): Valor residual.
     """
-    porta_serial = '/dev/serial0'
-    baudrate = 9600  # Taxa de transmissão (ajuste conforme necessário)
-
     try:
         with serial.Serial(porta_serial, baudrate, timeout=1) as ser:
             dados = f"({volume:.2f},{tempo:.2f},{residual})"
@@ -33,6 +33,26 @@ def enviar_dados_serial(volume, tempo, residual):
         error_message = f"Ocorreu um erro: {str(e)}\n\nDetalhes: {traceback.format_exc()}"
         show_error(error_message)
         print(f"Erro ao acessar a porta serial: {e}")
+
+def receber_dados():
+    """
+    Lê os dados na forma '(progresso, tempo_faltante)' da porta serial e retorna os valores.
+    
+    Returns:
+        tuple: Uma tupla com progresso (float) e tempo_faltante (int) ou None se não houver dados.
+    """
+    try:
+        with serial.Serial(porta_serial, baudrate, timeout=1) as ser:
+            if ser.in_waiting > 0:
+                # Lê a linha completa da porta serial
+                linha = ser.readline().decode().strip()
+                # Verifica o formato dos dados e converte
+                if linha.startswith("(") and linha.endswith(")"):
+                    progresso, tempo_faltante = map(float, linha[1:-1].split(","))
+                    return progresso, int(tempo_faltante)
+    except serial.SerialException as e:
+        print(f"Erro ao acessar a porta serial: {e}")
+    return None
 
 
 # Função para obter o nome do dispositivo
