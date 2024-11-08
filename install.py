@@ -3,7 +3,7 @@ import shutil
 import sys
 import subprocess
 
-# Caminhos de arquivos
+# Modelo do arquivo .desktop, incluindo o campo Path
 desktop_entry = """
 [Desktop Entry]
 Version=1.0
@@ -25,7 +25,7 @@ def instalar_requisitos():
         print("Erro ao instalar dependências:", e)
 
 # Função para criar o arquivo .desktop
-def criar_arquivo_desktop(exec_path, icon_path):
+def criar_arquivo_desktop(exec_path, icon_path, working_dir):
     user_desktop_dir = os.path.join(os.path.expanduser("~"), ".local/share/applications")
     if not os.path.exists(user_desktop_dir):
         os.makedirs(user_desktop_dir)
@@ -33,7 +33,7 @@ def criar_arquivo_desktop(exec_path, icon_path):
     desktop_file_path = os.path.join(user_desktop_dir, "dialise_gui.desktop")
     
     with open(desktop_file_path, 'w') as f:
-        f.write(desktop_entry.format(exec_path=exec_path, icon_path=icon_path))
+        f.write(desktop_entry.format(exec_path=exec_path, icon_path=icon_path, working_dir=working_dir))
     
     os.chmod(desktop_file_path, 0o755)
     print(f"Arquivo .desktop criado em {desktop_file_path}")
@@ -57,9 +57,10 @@ def instalar():
     
     exec_path = os.path.abspath("dialise_gui.py")
     icon_path = copiar_icone()
-    
+    working_dir = os.path.dirname(exec_path)  # Define o diretório de trabalho como o diretório do script
+
     print("Criando arquivo .desktop...")
-    criar_arquivo_desktop(exec_path, icon_path)
+    criar_arquivo_desktop(exec_path, icon_path, working_dir)
     print("Instalação completa!")
 
 if __name__ == "__main__":
