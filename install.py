@@ -14,6 +14,7 @@ Icon={icon_path}
 Terminal=false
 Type=Application
 Categories=Utility;
+Path=/home/dialise/Dowloads/DPA
 """
 
 # Função para verificar se os requisitos estão instalados

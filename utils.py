@@ -7,18 +7,33 @@ import platform
 import traceback
 from datetime import datetime
 import screen_brightness_control as sbc
+import serial
 
 # Função para exibir a caixa de erro
 def show_error(message):
     tk.messagebox.showerror("Erro", message)
 
-# Função que pode gerar um erro (exemplo)
-def send_data():
+def enviar_dados_serial(volume, tempo, residual):
+    """
+    Envia os valores de volume, tempo e residual na forma "(volume, tempo, residual)" pela porta serial.
+    
+    Args:
+        volume (float): Valor do volume.
+        tempo (float): Valor do tempo.
+        residual (float): Valor residual.
+    """
+    porta_serial = '/dev/serial0'
+    baudrate = 9600  # Taxa de transmissão (ajuste conforme necessário)
+
     try:
-        result = 10 / 0
+        with serial.Serial(porta_serial, baudrate, timeout=1) as ser:
+            dados = f"({volume:.2f},{tempo:.2f},{residual})"
+            print("Dados enviados:", dados) 
     except Exception as e:
         error_message = f"Ocorreu um erro: {str(e)}\n\nDetalhes: {traceback.format_exc()}"
         show_error(error_message)
+        print(f"Erro ao acessar a porta serial: {e}")
+
 
 # Função para obter o nome do dispositivo
 def get_device_name():
