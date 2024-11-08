@@ -54,7 +54,7 @@ def mostrar_frame(frame, aba):
 root = ctk.CTk()
 root.title("PERITONE.AI")
 root.geometry("800x400")
-root.iconbitmap("./images/icon.ico")
+#root.iconbitmap("./images/icon.ico")
 root.wm_attributes("-fullscreen",True)
 
 # Título principal e hora
