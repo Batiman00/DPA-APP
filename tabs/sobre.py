@@ -3,7 +3,7 @@ from utils import mostrar_dados_dispositivo, add_scrollable_frame
 
 class SobreTab(ctk.CTkFrame):
     def __init__(self, master):
-        super().__init__(master, width=568, height=317, fg_color=["#152759","#064E3B"])
+        super().__init__(master, width=584, height=317, fg_color=["#152759","#064E3B"])
         ctk.set_default_color_theme("blue-dpa.json")
         self.grid_propagate(False)
 

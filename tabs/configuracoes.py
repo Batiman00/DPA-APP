@@ -3,7 +3,7 @@ from utils import ajustar_brilho
 
 class ConfiguracoesTab(ctk.CTkFrame):
     def __init__(self, master):
-        super().__init__(master, width=568, height=317, fg_color=["#152759","#064E3B"],corner_radius=0)
+        super().__init__(master, width=584, height=317, fg_color=["#152759","#064E3B"],corner_radius=0)
         self.grid_propagate(False)
 
         brilho_label = ctk.CTkLabel(self, text="Brilho da tela", font=("Poppins", 16, "bold"),width=100, text_color="white")

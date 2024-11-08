@@ -43,6 +43,7 @@ root = ctk.CTk()
 root.title("PERITONE.AI")
 root.geometry("800x400")
 root.iconbitmap("./images/icon.ico")
+root.wm_attributes("-fullscreen",True)
 
 # Título principal e hora
 title_frame = ctk.CTkFrame(root)
@@ -75,17 +76,17 @@ sobre_frame.grid(row=1, column=1)
 parametros_button = ctk.CTkButton(tab_frame,anchor='w', text="Parâmetros", width=180, height=40, font=("Poppins", 16, "bold"),
                                   command=lambda: mostrar_frame(param_frame, "parametros"), 
                                   fg_color=["#152759","#064E3B"], text_color="black",background_corner_colors=[["#9EC9E0","#34D399"], ["#152759","#064E3B"],["#152759","#064E3B"], ["#9EC9E0","#34D399"]], border_width=2)  # Inicialmente selecionado
-parametros_button.grid(row=0, column=0, padx=(35, 0), sticky="w")
+parametros_button.grid(row=0, column=0, padx=(30, 0), sticky="w")
 
 configuracoes_button = ctk.CTkButton(tab_frame,anchor='w', text="Configurações", width=180, height=40, font=("Poppins", 16, "bold"),
                                      command=lambda: mostrar_frame(config_frame, "configuracoes"), 
                                      fg_color=["#9EC9E0","#34D399"], text_color="white",background_corner_colors=[["#9EC9E0","#34D399"],["#152759","#064E3B"],["#152759","#064E3B"], ["#9EC9E0","#34D399"]],border_width=2)  # Não selecionada
-configuracoes_button.grid(row=1, column=0, padx=(35, 0),)
+configuracoes_button.grid(row=1, column=0, padx=(30, 0),)
 
 sobre_button = ctk.CTkButton(tab_frame,anchor='w', text="Sobre", width=180, height=40, font=("Poppins", 16, "bold"),
                              command=lambda: mostrar_frame(sobre_frame, "sobre"), 
                              fg_color=["#9EC9E0","#34D399"], text_color="white",background_corner_colors=[["#9EC9E0","#34D399"], ["#152759","#064E3B"],["#152759","#064E3B"], ["#9EC9E0","#34D399"]],border_width=2)  # Não selecionada
-sobre_button.grid(row=2, column=0, padx=(35, 0))
+sobre_button.grid(row=2, column=0, padx=(30, 0))
 
 exit_button = ctk.CTkButton(tab_frame, text="SAIR", width=100, height=34,font=("Poppins", 16, "bold"), command=root.quit, corner_radius=16)
 exit_button.grid(row=4, column=0, pady=(150,0))
