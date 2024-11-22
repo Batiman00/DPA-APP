@@ -29,7 +29,6 @@ class MonitoramentoTab(ctk.CTkFrame):
         dados = receber_dados()
         if dados:
             volume_infundido, volume_total, tempo_faltante = dados
-            progresso, tempo_faltante = dados
             # Atualiza a barra de progresso e o rótulo do tempo
             self.progress.set(volume_infundido / volume_total)  # Supondo que o progresso é um valor percentual
             self.time_label.configure(text=f"{tempo_faltante} min")
