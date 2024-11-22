@@ -90,8 +90,5 @@ class ParametrosTab(ctk.CTkFrame):
             self.residual_value_label.configure(text=f"{self.residual} mL")
 
     def enviar_dados_button_click(self):
-        print(self.hour + self.minutes)
-        time = self.hour + self.minutes == 30 if 0.5 else 0
-        print(time)
-        time = time*60
+        time = (self.hour*60 + self.minutes)*60
         enviar_dados_serial(int(self.volume_total*1000), time, self.residual)
