@@ -15,7 +15,7 @@ class ParametrosTab(ctk.CTkFrame):
         param_row3 = ctk.CTkFrame(self,border_width=1,fg_color="#152759")
         param_row3.grid(row=2, column=0, padx=(12,12),pady=8)
         # Volume total
-        self.volume_total = 1.0
+        self.volume_total = 1
         volume_label = ctk.CTkLabel(param_row1,text="Volume total", font=("Poppins", 16,"bold"), width=210, height=56)
         volume_label.grid(row=0, column=0,padx=(4, 0),pady=1)
 
@@ -92,4 +92,4 @@ class ParametrosTab(ctk.CTkFrame):
     def enviar_dados_button_click(self):
         time = self.hour + self.minutes == 30 if 0.5 else 0
         time = time*60
-        enviar_dados_serial(self.volume_total, time, self.residual)
+        enviar_dados_serial(self.volume_total*1000, time, self.residual)
