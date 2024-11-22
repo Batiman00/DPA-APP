@@ -6,6 +6,7 @@ class ParametrosTab(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master, width=584, height=317, fg_color="#152759",corner_radius=0)
         self.grid_propagate(False)
+        self.grid(padx=0)
 
         param_row1 = ctk.CTkFrame(self, border_width=1, fg_color="#152759")
         param_row1.grid(row=0, column=0, pady=8,padx=(12,12))
@@ -90,4 +91,5 @@ class ParametrosTab(ctk.CTkFrame):
 
     def enviar_dados_button_click(self):
         time = self.hour + self.minutes == 30 if 0.5 else 0
+        time = time*60
         enviar_dados_serial(self.volume_total, time, self.residual)

@@ -10,24 +10,24 @@ import screen_brightness_control as sbc
 import serial
 
 
-porta_serial = '/dev/serial0'
-baudrate = 9600  # Taxa de transmissão (ajuste conforme necessário)
+porta_serial = '/dev/ttyUSB0'
+baudrate = 115200  # Taxa de transmissão (ajuste conforme necessário)
 
 def show_error(message):
     tk.messagebox.showerror("Erro", message)
 
-def enviar_dados_serial(volume, tempo, residual):
+def enviar_dados_serial(volume_infundido, tempo, volume_drenado):
     """
-    Envia os valores de volume, tempo e residual na forma "(volume, tempo, residual)" pela porta serial.
+    Envia os valores de volume, tempo e residual na forma "(volume_infundido, tempo, volume_drenado)" pela porta serial.
     
     Args:
-        volume (float): Valor do volume.
-        tempo (float): Valor do tempo.
-        residual (float): Valor residual.
+        volume_infundido (int) [ml]: Valor do volume.
+        tempo (int) [s]: Valor do tempo.
+        volume_drenado (int) [ml]: Valor residual.
     """
     try:
         with serial.Serial(porta_serial, baudrate, timeout=1) as ser:
-            dados = f"({volume:.2f},{tempo:.2f},{residual})"
+            dados = f"({volume_infundido},{tempo},{volume_drenado})"
             print("Dados enviados:", dados) 
     except Exception as e:
         error_message = f"Ocorreu um erro: {str(e)}\n\nDetalhes: {traceback.format_exc()}"
@@ -36,10 +36,10 @@ def enviar_dados_serial(volume, tempo, residual):
 
 def receber_dados():
     """
-    Lê os dados na forma '(progresso, tempo_faltante)' da porta serial e retorna os valores.
+    Lê os dados na forma '(volume_infundido, volume_total, tempo_faltante)' da porta serial e retorna os valores.
     
     Returns:
-        tuple: Uma tupla com progresso (float) e tempo_faltante (int) ou None se não houver dados.
+        tuple: Uma tupla com volume_infundido (int) [ml], volume_total (int)[ml], tempo_faltante (int) [s] ou None se não houver dados.
     """
     try:
         with serial.Serial(porta_serial, baudrate, timeout=1) as ser:
@@ -48,8 +48,8 @@ def receber_dados():
                 linha = ser.readline().decode().strip()
                 # Verifica o formato dos dados e converte
                 if linha.startswith("(") and linha.endswith(")"):
-                    progresso, tempo_faltante = map(float, linha[1:-1].split(","))
-                    return progresso, int(tempo_faltante)
+                    volume_infundido, volume_total, tempo_faltante = map(int, linha[1:-1].split(","))
+                    return volume_infundido, volume_total, tempo_faltante
     except serial.SerialException as e:
         print(f"Erro ao acessar a porta serial: {e}")
     return None
