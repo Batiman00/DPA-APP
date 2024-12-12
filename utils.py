@@ -8,51 +8,30 @@ import traceback
 from datetime import datetime
 import screen_brightness_control as sbc
 import serial
+from serial_communication import SerialCommunication
 
 
 porta_serial = '/dev/ttyUSB0'
-baudrate = 115200  # Taxa de transmissão (ajuste conforme necessário)
+baudrate = 115200
+serial_comm = SerialCommunication(porta_serial, baudrate)
 
 def show_error(message):
     tk.messagebox.showerror("Erro", message)
 
 def enviar_dados_serial(volume_infundido, tempo, volume_drenado):
-    """
-    Envia os valores de volume, tempo e residual na forma "(volume_infundido, tempo, volume_drenado)" pela porta serial.
-    
-    Args:
-        volume_infundido (int) [ml]: Valor do volume.
-        tempo (int) [s]: Valor do tempo.
-        volume_drenado (int) [ml]: Valor residual.
-    """
-    try:
-        with serial.Serial(porta_serial, baudrate, timeout=1) as ser:
-            dados = f"({volume_infundido},{tempo},{volume_drenado})"
-            print("Dados enviados:", dados) 
-    except Exception as e:
-        error_message = f"Ocorreu um erro: {str(e)}\n\nDetalhes: {traceback.format_exc()}"
-        show_error(error_message)
-        print(f"Erro ao acessar a porta serial: {e}")
+    if serial_comm.is_connected:
+        serial_comm.enviar_dados(volume_infundido, tempo, volume_drenado)
 
 def receber_dados():
-    """
-    Lê os dados na forma '(volume_infundido, volume_total, tempo_faltante)' da porta serial e retorna os valores.
-    
-    Returns:
-        tuple: Uma tupla com volume_infundido (int) [ml], volume_total (int)[ml], tempo_faltante (int) [s] ou None se não houver dados.
-    """
-    try:
-        with serial.Serial(porta_serial, baudrate, timeout=1) as ser:
-            if ser.in_waiting > 0:
-                # Lê a linha completa da porta serial
-                linha = ser.readline().decode().strip()
-                # Verifica o formato dos dados e converte
-                if linha.startswith("(") and linha.endswith(")"):
-                    volume_infundido, volume_total, tempo_faltante = map(int, linha[1:-1].split(","))
-                    return volume_infundido, volume_total, tempo_faltante
-    except serial.SerialException as e:
-        print(f"Erro ao acessar a porta serial: {e}")
-    return None
+    if serial_comm.is_connected:
+        serial_comm.receber_dados()
+
+def try_connection():
+    if not serial_comm.is_connected:
+        serial_comm.connect()
+
+def get_connection_state():
+    return serial_comm.is_connected
 
 
 # Função para obter o nome do dispositivo

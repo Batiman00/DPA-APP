@@ -48,17 +48,20 @@ class ParametrosTab(ctk.CTkFrame):
         residual_button = add_plus_minus_buttom(param_row3, self.aumentar_residual, self.diminuir_residual,2)
         residual_button.grid(row=1, column=2, pady=2,padx=2)
 
+        check_connection_button = ctk.CTkButton(self, text="Check Serial", font=("Poppins", 16, "bold"), width=150, height=45, fg_color="#468C2D", corner_radius=16)
+        check_connection_button.grid(row=3, column=0, padx=(10,0), pady=(40,0),sticky="w")
+
         send_data_button = ctk.CTkButton(self, text="Enviar dados", font=("Poppins", 16, "bold"), width=150, height=45, fg_color="#468C2D",corner_radius=16, command=self.enviar_dados_button_click)
-        send_data_button.grid(row=3, column=0,sticky="e",padx=(0,16),pady=(40,0))
+        send_data_button.grid(row=3, column=0,sticky="e",padx=(0,0),pady=(40,0))
 
     def aumentar_volume(self):
         if self.volume_total < 10:
-            self.volume_total += 0.25
+            self.volume_total += 0.05
             self.volume_value_label.configure(text=f"{self.volume_total:.2f} Litro(s)")
 
     def diminuir_volume(self):
-        if self.volume_total > 0.5:
-            self.volume_total -= 0.25
+        if self.volume_total > 0.05:
+            self.volume_total -= 0.05
             self.volume_value_label.configure(text=f"{self.volume_total:.2f} Litro(s)")
 
     def aumentar_tempo(self):
@@ -81,12 +84,12 @@ class ParametrosTab(ctk.CTkFrame):
 
     def aumentar_residual(self):
         if self.residual < self.volume_total*1000:
-            self.residual += 100
+            self.residual += 50
             self.residual_value_label.configure(text=f"{self.residual} mL")
 
     def diminuir_residual(self):
         if self.residual > 0:
-            self.residual -= 100
+            self.residual -= 50
             self.residual_value_label.configure(text=f"{self.residual} mL")
 
     def enviar_dados_button_click(self):
