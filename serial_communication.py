@@ -13,6 +13,7 @@ class SerialCommunication:
         self.baudrate = baudrate
         self.is_connected = False
         self.ser = None
+        self.connect()
 
     def connect(self):
         """
