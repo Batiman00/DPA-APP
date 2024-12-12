@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from widgets import add_plus_minus_buttom
-from utils import enviar_dados_serial
+from utils import enviar_dados_serial, try_connection, get_connection_state
 
 class ParametrosTab(ctk.CTkFrame):
     def __init__(self, master):
@@ -48,7 +48,7 @@ class ParametrosTab(ctk.CTkFrame):
         residual_button = add_plus_minus_buttom(param_row3, self.aumentar_residual, self.diminuir_residual,2)
         residual_button.grid(row=1, column=2, pady=2,padx=2)
 
-        check_connection_button = ctk.CTkButton(self, text="Check Serial", font=("Poppins", 16, "bold"), width=150, height=45, fg_color="#468C2D", corner_radius=16)
+        check_connection_button = ctk.CTkButton(self, text="Check Serial", font=("Poppins", 16, "bold"), width=150, height=45, fg_color="#468C2D", corner_radius=16, command=self.enviar_dados_button_click)
         check_connection_button.grid(row=3, column=0, padx=(10,0), pady=(40,0),sticky="w")
 
         send_data_button = ctk.CTkButton(self, text="Enviar dados", font=("Poppins", 16, "bold"), width=150, height=45, fg_color="#468C2D",corner_radius=16, command=self.enviar_dados_button_click)
@@ -95,3 +95,11 @@ class ParametrosTab(ctk.CTkFrame):
     def enviar_dados_button_click(self):
         time = (self.hour*60 + self.minutes)*60
         enviar_dados_serial(int(self.volume_total*1000), time, self.residual)
+
+    def check_serial_connection(self):
+        try_connection()
+        connected = get_connection_state()
+        if connected:
+            self.master.connection_state.configure(text="CONNECTED", text_color="green")
+        else:
+            self.master.connection_state.configure(text="NOT CONNECTED", text_color="red")
