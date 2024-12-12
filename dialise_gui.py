@@ -64,8 +64,8 @@ title_frame.grid(row=0, column=0, columnspan=3, pady=10, padx=10, sticky="ew")
 title_label = ctk.CTkLabel(title_frame, text="PERITONE.AI", font=("Poppins", 28, "bold", "italic"),text_color=["#282828","#000000"])
 title_label.grid(row=0, column=0, padx=(35, 10))
 
-connection_state = ctk.CTkLabel(title_frame, text="NOT CONNECTED", font=("Poppins", 16, "bold"), anchor="s",text_color=["#282828","#000000"])
-connection_state.grid(row=0, column=1, padx=(100, 0),sticky="e")
+root.connection_state = ctk.CTkLabel(title_frame, text="CONNECTED", font=("Poppins", 16, "bold"), anchor="s",text_color=["#282828","#000000"])
+root.connection_state.grid(row=0, column=1, padx=(100, 0),sticky="e")
 
 hora_label = ctk.CTkLabel(title_frame, text="", font=("Poppins", 16, "bold"), anchor="s",text_color=["#282828","#000000"])
 hora_label.grid(row=0, column=2, padx=(200, 0),sticky="e")
